@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {initBoard} from './Common/shuffleBoard'
 import Board from './Board'
 import ScoreBox from './ScoreBox'
 import CurrentWord from './CurrentWord'
@@ -7,13 +8,22 @@ class Game extends Component {
 
   constructor() {
     super()
+    this.board = initBoard()
   }
+
+  //tile() {
+  //    const tile = {
+  //      letter: ,
+  //      isSelected: false,
+  //      position: {row: rowIndex, column: col}
+  //    }
+  //}
 
   render() {
     return (
       <div>
         <div className="game-area">
-            <Board />
+           <Board board={this.board}/>
           <CurrentWord />
         </div>
 
