@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {initBoard} from './Common/shuffleBoard'
+import {shuffleBoard} from './Common/shuffleBoard'
 import Board from './Board'
 import ScoreBox from './ScoreBox'
 import CurrentWord from './CurrentWord'
@@ -8,7 +8,7 @@ class Game extends Component {
 
   constructor() {
     super()
-    this.board = initBoard()
+    this.board = shuffleBoard()
   }
 
   //tile() {
