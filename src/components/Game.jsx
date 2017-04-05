@@ -9,6 +9,10 @@ class Game extends Component {
   constructor() {
     super()
     this.board = shuffleBoard()
+    this.handleClick = this.handleClick.bind(this)
+    this.state = {
+      currentWord: ''
+    }
   }
 
   //tile() {
@@ -18,13 +22,18 @@ class Game extends Component {
   //      position: {row: rowIndex, column: col}
   //    }
   //}
+  handleClick(letter) {
+    this.setState({
+      currentWord: this.state.currentWord.concat(letter)
+    })
+  }
 
   render() {
     return (
       <div>
         <div className="game-area">
-           <Board board={this.board}/>
-          <CurrentWord />
+          <Board board={this.board} handleClick={this.handleClick}/>
+          <CurrentWord currentWord={this.state.currentWord} />
         </div>
 
         <ScoreBox />

@@ -4,7 +4,7 @@ import Tile from './Tile'
 
 const Board = (props) => {
 
-  const {board} = props;
+  const {board, handleClick} = props;
   return (
     <div className="blue-area">
       {
@@ -13,14 +13,13 @@ const Board = (props) => {
               <div className="row" key={index}>
                 {
                   row.map((tile, index) => {
-                    return (<Tile selected={tile.isSelected} letter={tile} key={index} />)
+                    return (<Tile selected={tile.isSelected} letter={tile} key={index} handleClick={handleClick.bind(this, tile)}/>)
                   })
                 }
             </div>
           )
         })
       }
-
     </div>
   )
 }

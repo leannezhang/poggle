@@ -2,6 +2,8 @@ import React from 'react'
 import Button from './Button'
 
 const CurrentWord = (props) => {
+  const {currentWord} = props
+
   return (
 
     <div className="word-area">
@@ -9,7 +11,7 @@ const CurrentWord = (props) => {
         Current Word
       </div>
       <div className="current-word">
-        DOG
+        {currentWord}
       </div>
 
       <Button />
