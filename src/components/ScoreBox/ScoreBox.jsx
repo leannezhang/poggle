@@ -1,6 +1,9 @@
 import React from 'react'
 
 const ScoreBox = (props) => {
+  const {wordList} = props
+  console.log(wordList)
+
   return (
     <div className="score-box">
       <div className="word-list">

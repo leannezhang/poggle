@@ -2,7 +2,7 @@ import React from 'react'
 import Button from './Button'
 
 const CurrentWord = (props) => {
-  const {currentWord} = props
+  const {currentWord, handleSubmit} = props
 
   return (
 
@@ -14,7 +14,7 @@ const CurrentWord = (props) => {
         {currentWord}
       </div>
 
-      <Button />
+      <Button handleSubmit={handleSubmit.bind(this, currentWord)} />
     </div>
   )
 }
