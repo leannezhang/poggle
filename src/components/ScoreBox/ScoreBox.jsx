@@ -12,7 +12,7 @@ const ScoreBox = (props) => {
           <li>WORD</li>
           {
             words.map(function(word) {
-             return (<li>{word}</li>)
+              return (<li>{word}</li>)
             })
           }
         </div>
