@@ -13,7 +13,8 @@ class Game extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     this.state = {
       currentWord: '',
-      wordList: {}
+      wordList: {},
+      totalScore : 0
     }
   }
 
@@ -38,11 +39,15 @@ class Game extends Component {
 
     const mergeWordList = Object.assign({}, this.state.wordList)
 
-    if (!mergeWordList[word]) {
+    if ( word.length > 0 && !mergeWordList[word] ) {
       mergeWordList[word] = this.calculateScore(word)
+
+      const totalScore = this.state.totalScore +  mergeWordList[word];
+
       this.setState({
         wordList: mergeWordList,
-        currentWord: ''
+        currentWord: '',
+        totalScore : totalScore
       })
     }
   }
@@ -50,7 +55,6 @@ class Game extends Component {
   // 2. Submit a current word
   // 3. Create a wordlist
   // 4. Calculate total score
-
   // 5. enable surround squares
 
   render() {
@@ -61,7 +65,7 @@ class Game extends Component {
           <CurrentWord currentWord={this.state.currentWord} handleSubmit={this.handleSubmit}/>
         </div>
 
-        <ScoreBox wordList={this.state.wordList} />
+        <ScoreBox wordList={this.state.wordList} totalScore={this.state.totalScore} />
 
         <div className="clear">
         </div>
