@@ -32,7 +32,11 @@ class Game extends Component {
   }
 
   calculateScore(word) {
-    return word.length
+    if (word.length >= 3 && word.length <= 8) {
+      return word.length - 2
+    } else {
+      return 6
+    }
   }
 
   handleSubmit(word) {
