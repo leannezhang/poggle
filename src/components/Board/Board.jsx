@@ -10,13 +10,13 @@ const Board = (props) => {
       {
         board.map((row, index) => {
           return (
-              <div className="row" key={index}>
-                {
-                  row.map((tile, index) => {
-                    return (<Tile selected={tile.isSelected} letter={tile} key={index} handleClick={handleClick.bind(this, tile)}/>)
-                  })
-                }
-              </div>
+            <div className="row" key={index}>
+              {
+                row.map((tile, index) => {
+                  return (<Tile selected={tile.isSelected} letter={tile} key={index} handleClick={handleClick.bind(this, tile)}/>)
+                })
+              }
+            </div>
           )
         })
       }
