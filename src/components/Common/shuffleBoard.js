@@ -1,31 +1,30 @@
 const facesNum = 6
 const boardLength = 5
-const randomlySelectFace = (faces) => {
+const randomlySelectedFace = (faces) => {
   let randomIndex = Math.floor(Math.random() * facesNum)
-  let face = faces.charAt(randomIndex)
-  return face
+  return faces.charAt(randomIndex)
 }
 
 
-const shuffleDices = (dices) => {
-  for (let i=0; i < dices.length; i++ ) {
-    let randomIndex = Math.floor(Math.random() *  dices.length) // random from 0 -> 25
-    let temp = dices[i];
-    dices[i] = dices[randomIndex]
-    dices[randomIndex] = temp;
+const shuffledice = (dice) => {
+  for (let i=0; i < dice.length; i++ ) {
+    let randomIndex = Math.floor(Math.random() *  dice.length) // random from 0 -> 25
+    let temp = dice[i];
+    dice[i] = dice[randomIndex]
+    dice[randomIndex] = temp;
   }
-  return dices
+  return dice
 }
 
 
 export const shuffleBoard = () => {
-  //  Create 1D array with dices
-  //  Shuffle the dices
+  //  Create 1D array with dice
+  //  Shuffle the dice
   //  Create 2D array with an empty board
   //  Randomly select from the 1D array
   //  Insert in the board and randomly pick a face
 
-  const dices = [
+  const dice = [
     "aaafrs", "aaeeee", "aafirs", "aeeeem", "aeegmu",
     "aegmnn", "afirsy", "bjkqxz", "ccenst", "ceiilt",
     "ceilpt", "ceipst", "ddhnot", "dhhlor", "dhhlor",
@@ -41,14 +40,14 @@ export const shuffleBoard = () => {
     ['','','','','']
   ]
 
-  const shuffledDices = shuffleDices(dices);
+  const shuffleddice = shuffledice(dice);
 
   for (let row=0; row < boardLength; row++) {
     for(let col=0; col < boardLength; col++) {
 
-      let dice = shuffledDices.shift()
+      let dice = shuffleddice.shift()
 
-      let face = randomlySelectFace(dice);
+      let face = randomlySelectedFace(dice);
 
       board[row][col] = face;
     }

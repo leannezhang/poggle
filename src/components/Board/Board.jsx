@@ -16,7 +16,7 @@ const Board = (props) => {
                     return (<Tile selected={tile.isSelected} letter={tile} key={index} handleClick={handleClick.bind(this, tile)}/>)
                   })
                 }
-            </div>
+              </div>
           )
         })
       }
