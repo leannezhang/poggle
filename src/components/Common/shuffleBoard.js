@@ -6,7 +6,7 @@ const randomlySelectedFace = (faces) => {
 }
 
 
-const shuffledice = (dice) => {
+const shuffleDice = (dice) => {
   for (let i=0; i < dice.length; i++ ) {
     let randomIndex = Math.floor(Math.random() *  dice.length) // random from 0 -> 25
     let temp = dice[i];
@@ -40,12 +40,12 @@ export const shuffleBoard = () => {
     ['','','','','']
   ]
 
-  const shuffleddice = shuffledice(dice);
+  const shuffledDice = shuffleDice(dice);
 
   for (let row=0; row < boardLength; row++) {
     for(let col=0; col < boardLength; col++) {
 
-      let dice = shuffleddice.shift()
+      let dice = shuffledDice.shift()
 
       let face = randomlySelectedFace(dice);
 
