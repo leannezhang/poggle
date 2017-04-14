@@ -26,6 +26,7 @@ class Game extends Component {
   //    }
   //}
   handleClick(letter) {
+    // if letter is within the surround previous letter
     this.setState({
       currentWord: this.state.currentWord.concat(letter)
     })
@@ -34,8 +35,10 @@ class Game extends Component {
   calculateScore(word) {
     if (word.length >= 3 && word.length <= 8) {
       return word.length - 2
-    } else {
+    } else if (word.length > 8) {
       return 6
+    } else {
+      return 1
     }
   }
 
