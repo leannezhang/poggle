@@ -1,4 +1,5 @@
 import React from 'react'
+import WordScoreList from './WordScoreList'
 
 const ScoreBox = (props) => {
   const {wordList, totalScore} = props
@@ -7,28 +8,7 @@ const ScoreBox = (props) => {
 
   return (
     <div className="score-box">
-      <div className="word-list">
-        <div className="words">
-          <li>WORD</li>
-          {
-            words.map(function(word) {
-              return (<li>{word}</li>)
-            })
-          }
-        </div>
-        <div className="scores">
-          <li>SCORE</li>
-          {
-            scores.map(function(score) {
-              return (<li>{score}</li>)
-            })
-          }
-        </div>
-      </div>
-      <div className="total-score">
-        <h2>Total Score</h2>
-        <span>{totalScore}</span>
-      </div>
+      <WordScoreList words={words} scores={scores} totalScore={totalScore}/>
     </div>
   )
 }
