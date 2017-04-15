@@ -13,33 +13,43 @@ class Game extends Component {
     this.initBoard = shuffleBoard()
     this.state = {
       board : this.initBoard,
-      currentWordArray: [],
       currentWord: '',
+      currentWordPosition: [],
       wordList: {},
       totalScore : 0
     }
   }
   // 1. click on the tile
-  // 2. update tile selected to true
-  // 3. copy board
-  // 4. render the board with updated tile so it renders as active
+  // 2. update tile selected to true.
+  // 2.1 Can select and unselect the tile
+  // 2.2 Can only unselect the last tile
+  // 2.3 Update currentWord as we select and unselect
+  // 2.4. TODO: should be only able to select the surrounding cells
+  // 2.5 Make a copy of board, word, currentWordPositions, etc
+  // 2.6 Mutate the state
+  // 3. render the board with updated tile so it renders as active
   handleClick(rowId, columnId) {
     const newBoard = copyBoard(this.state.board);
     const selected = newBoard[rowId][columnId].selected;
-    let currentWord;
-    if(selected) {
+    let currentWord = this.state.currentWord;
+    let newCurrentWordPosition = this.state.currentWordPosition.slice();
+    const lastLetter = newCurrentWordPosition[newCurrentWordPosition.length - 1]
+
+    if(selected && rowId === lastLetter.rowId && columnId === lastLetter.columnId) {
       newBoard[rowId][columnId].selected = false;
       // Remove last letter from the currentWord
       currentWord = this.state.currentWord.slice(0, -1);
-    } else {
+      newCurrentWordPosition = newCurrentWordPosition.slice(0, -1);
+    } else if (!selected) {
       newBoard[rowId][columnId].selected = true;
       // Add a letter to the end of the currentWord
+      newCurrentWordPosition.push({rowId: rowId, columnId: columnId});
       currentWord = this.state.currentWord.concat(newBoard[rowId][columnId].letter);
     }
     this.setState({
       currentWord,
-      //currentWordArray: this.state.currentWordArray.concat(tile),
-      board : newBoard
+      board : newBoard,
+      currentWordPosition: newCurrentWordPosition
     })
   }
 
