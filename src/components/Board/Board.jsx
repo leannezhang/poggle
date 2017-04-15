@@ -12,8 +12,8 @@ const Board = (props) => {
           return (
             <div className="row" key={index}>
               {
-                row.map((tile, index) => {
-                  return (<Tile selected={tile.isSelected} letter={tile} key={index} handleClick={handleClick.bind(this, tile)}/>)
+                row.map((tile) => {
+                  return (<Tile selected={tile.selected} letter={tile.letter} key={tile.columnId} handleClick={handleClick.bind(this, tile.rowId, tile.columnId)}/>)
                 })
               }
             </div>

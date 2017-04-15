@@ -1,34 +1,45 @@
 import React, { Component } from 'react'
-import {shuffleBoard} from './Common/shuffleBoard'
+import {shuffleBoard, copyBoard} from './Common/shuffleBoard'
 import Board from './Board'
 import ScoreBox from './ScoreBox'
 import CurrentWord from './CurrentWord'
 import './Game.css'
 class Game extends Component {
 
-  constructor() {
-    super()
-    this.board = shuffleBoard()
+  constructor(props) {
+    super(props)
     this.handleClick = this.handleClick.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.initBoard = shuffleBoard()
     this.state = {
+      board : this.initBoard,
+      currentWordArray: [],
       currentWord: '',
       wordList: {},
       totalScore : 0
     }
   }
-
-  //tile() {
-  //    const tile = {
-  //      letter: ,
-  //      isSelected: false,
-  //      position: {row: rowIndex, column: col}
-  //    }
-  //}
-  handleClick(letter) {
-    // if letter is within the surround previous letter
+  // 1. click on the tile
+  // 2. update tile selected to true
+  // 3. copy board
+  // 4. render the board with updated tile so it renders as active
+  handleClick(rowId, columnId) {
+    const newBoard = copyBoard(this.state.board);
+    const selected = newBoard[rowId][columnId].selected;
+    let currentWord;
+    if(selected) {
+      newBoard[rowId][columnId].selected = false;
+      // Remove last letter from the currentWord
+      currentWord = this.state.currentWord.slice(0, -1);
+    } else {
+      newBoard[rowId][columnId].selected = true;
+      // Add a letter to the end of the currentWord
+      currentWord = this.state.currentWord.concat(newBoard[rowId][columnId].letter);
+    }
     this.setState({
-      currentWord: this.state.currentWord.concat(letter)
+      currentWord,
+      //currentWordArray: this.state.currentWordArray.concat(tile),
+      board : newBoard
     })
   }
 
@@ -42,33 +53,36 @@ class Game extends Component {
     }
   }
 
+  // 1. Submit a current word
+  // 2. Create a wordlist
+  // 3. Calculate total score
+  // 4. Clear board
+
   handleSubmit(word) {
 
-    const mergeWordList = Object.assign({}, this.state.wordList)
+    const mergeWordList = Object.assign({}, this.state.wordList);
 
     if ( word.length > 0 && !mergeWordList[word] ) {
-      mergeWordList[word] = this.calculateScore(word)
-
+      mergeWordList[word] = this.calculateScore(word);
       const totalScore = this.state.totalScore +  mergeWordList[word];
+      const clearedBoard = this.initBoard;
 
       this.setState({
         wordList: mergeWordList,
         currentWord: '',
-        totalScore : totalScore
+        totalScore : totalScore,
+        board: clearedBoard
       })
     }
   }
   // 1. Click on the square and makes up the current word
-  // 2. Submit a current word
-  // 3. Create a wordlist
-  // 4. Calculate total score
-  // 5. enable surround squares
+
 
   render() {
     return (
       <div>
         <div className="game-area">
-          <Board board={this.board} handleClick={this.handleClick}/>
+          <Board board={this.state.board} handleClick={this.handleClick}/>
           <CurrentWord currentWord={this.state.currentWord} handleSubmit={this.handleSubmit}/>
         </div>
 

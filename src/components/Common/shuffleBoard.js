@@ -1,3 +1,5 @@
+import {TileData} from '../../data'
+
 const facesNum = 6
 const boardLength = 5
 const randomlySelectedFace = (faces) => {
@@ -48,9 +50,18 @@ export const shuffleBoard = () => {
       let dice = shuffledDice.shift()
 
       let face = randomlySelectedFace(dice);
-
-      board[row][col] = face;
+      const tileData = new TileData(face, row, col);
+      board[row][col] = tileData;
     }
   }
   return board
+}
+
+export const copyBoard = board => {
+  const copiedBoard = board.map(row => {
+    return row.map(tile => {
+      return tile.clone()
+    })
+  })
+  return copiedBoard
 }
