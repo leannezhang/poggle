@@ -7,10 +7,19 @@ import './Game.css'
 class Game extends Component {
 
   constructor(props) {
-    super(props)
-    this.handleClick = this.handleClick.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.initBoard = shuffleBoard()
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.initBoard = shuffleBoard();
+    this.surroundingCells = [
+      {r:-1, c:-1},
+      {r:-1, c:0},
+      {r:-1, c:1},
+      {r:0, c:-1},
+      {r:0, c:1},
+      {r:1, c:-1},
+      {r:1, c:0},
+      {r:1, c:1}];
     this.state = {
       board : this.initBoard,
       currentWord: '',
@@ -35,12 +44,13 @@ class Game extends Component {
     let newCurrentWordPosition = this.state.currentWordPosition.slice();
     const lastLetter = newCurrentWordPosition[newCurrentWordPosition.length - 1]
 
-    if(selected && rowId === lastLetter.rowId && columnId === lastLetter.columnId) {
+    if(selected && rowId === lastLetter.rowId && columnId === lastLetter.columnId)
+    {
       newBoard[rowId][columnId].selected = false;
       // Remove last letter from the currentWord
       currentWord = this.state.currentWord.slice(0, -1);
       newCurrentWordPosition = newCurrentWordPosition.slice(0, -1);
-    } else if (!selected) {
+    } else if (!selected && this._validSurroundedTile(rowId, columnId, lastLetter) ) {
       newBoard[rowId][columnId].selected = true;
       // Add a letter to the end of the currentWord
       newCurrentWordPosition.push({rowId: rowId, columnId: columnId});
@@ -50,6 +60,17 @@ class Game extends Component {
       currentWord,
       board : newBoard,
       currentWordPosition: newCurrentWordPosition
+    })
+  }
+
+  _validSurroundedTile(rowId, columnId, lastLetter) {
+    if (!lastLetter) {
+      return true;
+    }
+    return this.surroundingCells.some(function(offset) {
+      if (rowId === (offset.r + lastLetter.rowId) && columnId === (offset.c + lastLetter.columnId)) {
+        return true;
+      }
     })
   }
 
@@ -80,6 +101,7 @@ class Game extends Component {
       this.setState({
         wordList: mergeWordList,
         currentWord: '',
+        currentWordPosition: [],
         totalScore : totalScore,
         board: clearedBoard
       })
