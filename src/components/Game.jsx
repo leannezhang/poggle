@@ -38,30 +38,35 @@ class Game extends Component {
   // 2.6 Mutate the state
   // 3. render the board with updated tile so it renders as active
   handleClick(rowId, columnId) {
-    const newBoard = copyBoard(this.state.board);
-    const selected = newBoard[rowId][columnId].selected;
+    const selected = this.state.board[rowId][columnId].selected;
     let currentWord = this.state.currentWord;
     let newCurrentWordPosition = this.state.currentWordPosition.slice();
     const lastLetter = newCurrentWordPosition[newCurrentWordPosition.length - 1];
 
     if (this._tileClickedIsLastSelected(selected, rowId, columnId, lastLetter)) {
-
+      const newBoard = copyBoard(this.state.board);
       newBoard[rowId][columnId].selected = false;
       currentWord = this.state.currentWord.slice(0, -1);
       newCurrentWordPosition = newCurrentWordPosition.slice(0, -1);
 
+      this.setState({
+        currentWord,
+        board : newBoard,
+        currentWordPosition: newCurrentWordPosition
+      });
     } else if (this._surroundingTileIsClicked(selected, rowId, columnId, lastLetter)) {
 
+      const newBoard = copyBoard(this.state.board);
       newBoard[rowId][columnId].selected = true;
       newCurrentWordPosition.push({rowId: rowId, columnId: columnId});
       currentWord = this.state.currentWord.concat(newBoard[rowId][columnId].letter);
 
-    };
-    this.setState({
-      currentWord,
-      board : newBoard,
-      currentWordPosition: newCurrentWordPosition
-    });
+      this.setState({
+        currentWord,
+        board : newBoard,
+        currentWordPosition: newCurrentWordPosition
+      });
+    }
   };
 
   _tileClickedIsLastSelected(selected, rowId, columnId, lastLetter) {

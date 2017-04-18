@@ -1,18 +1,39 @@
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
-# Poggle
+# Boggle
 
-Poggle is a word search game where you make words from adjacent letters in a grid of letters. The longer the word, the more points you score.
-For this homework, you’ll build a single page web UI for Poggle using React or another appropriate tool or framework.
+Boggle is a word search game where a player find words in sequence of adjacent letters. Player gets points by building words.
 
-## Table of Contents
+### Solution
+- This branch consists of solutions for the Boggle Game.
+
+### Features
+**Board**
+- [x] 5 x 5 board
+- [x] Each tile is randomized
+- [x] Board is shuffled
+**Submitting Word**
+- [x] Player selects a sequences of tiles to build a word, and it's shown in the Current Word section
+- [x] Submit a current word will add to the word list
+- [x] Duplicated words cannot be submitted
+- [x] Submitting a word clears the current word and tiles
+**Score**
+- [x] Score is calculated based on the number of letters
+**Selecting Tile**
+- [x] Player can select and unselect the current tile
+- [x] Player can only select a new tile from its previous adjacent tiles
+**Extras**
+- [ ] Player can restart the game
+- [ ] Player has 3 minutes to play
+- [ ] Word is validated with the dictionary
+
+
+## Getting Started
 
 - [Available Scripts](#available-scripts)
   - [npm start](#npm-start)
   - [npm test](#npm-test)
   - [npm run build](#npm-run-build)
-  - [npm run eject](#npm-run-eject)
-
 
 ## Available Scripts
 
@@ -40,14 +61,3 @@ The build is minified and the filenames include the hashes.<br>
 Your app is ready to be deployed!
 
 See the section about [deployment](#deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
