@@ -21,19 +21,19 @@ class Game extends Component {
       {r:1, c:0},
       {r:1, c:1}];
     this.state = {
-      board : this.initBoard,
+      board: this.initBoard,
       currentWord: '',
       currentWordPosition: [],
       wordList: {},
-      totalScore : 0
-    }
+      totalScore: 0
+    };
   }
   // 1. click on the tile
   // 2. update tile selected to true.
   // 2.1 Can select and unselect the tile
   // 2.2 Can only unselect the last tile
   // 2.3 Update currentWord as we select and unselect
-  // 2.4. TODO: should be only able to select the surrounding cells
+  // 2.4. Can only select the surrounding cells
   // 2.5 Make a copy of board, word, currentWordPositions, etc
   // 2.6 Mutate the state
   // 3. render the board with updated tile so it renders as active
@@ -42,28 +42,38 @@ class Game extends Component {
     const selected = newBoard[rowId][columnId].selected;
     let currentWord = this.state.currentWord;
     let newCurrentWordPosition = this.state.currentWordPosition.slice();
-    const lastLetter = newCurrentWordPosition[newCurrentWordPosition.length - 1]
+    const lastLetter = newCurrentWordPosition[newCurrentWordPosition.length - 1];
 
-    if(selected && rowId === lastLetter.rowId && columnId === lastLetter.columnId)
-    {
+    if (this._tileClickedIsLastSelected(selected, rowId, columnId, lastLetter)) {
+
       newBoard[rowId][columnId].selected = false;
-      // Remove last letter from the currentWord
       currentWord = this.state.currentWord.slice(0, -1);
       newCurrentWordPosition = newCurrentWordPosition.slice(0, -1);
-    } else if (!selected && this._validSurroundedTile(rowId, columnId, lastLetter) ) {
+
+    } else if (this._surroundingTileIsClicked(selected, rowId, columnId, lastLetter)) {
+
       newBoard[rowId][columnId].selected = true;
-      // Add a letter to the end of the currentWord
       newCurrentWordPosition.push({rowId: rowId, columnId: columnId});
       currentWord = this.state.currentWord.concat(newBoard[rowId][columnId].letter);
-    }
+
+    };
     this.setState({
       currentWord,
       board : newBoard,
       currentWordPosition: newCurrentWordPosition
-    })
+    });
+  };
+
+  _tileClickedIsLastSelected(selected, rowId, columnId, lastLetter) {
+    return selected && rowId === lastLetter.rowId && columnId === lastLetter.columnId;
   }
 
-  _validSurroundedTile(rowId, columnId, lastLetter) {
+  _surroundingTileIsClicked(selected, rowId, columnId, lastLetter) {
+    return !selected && this._isSurroundingTile(rowId, columnId, lastLetter);
+  }
+
+
+  _isSurroundingTile(rowId, columnId, lastLetter) {
     if (!lastLetter) {
       return true;
     }
@@ -71,7 +81,8 @@ class Game extends Component {
       if (rowId === (offset.r + lastLetter.rowId) && columnId === (offset.c + lastLetter.columnId)) {
         return true;
       }
-    })
+      return false;
+    });
   }
 
   calculateScore(word) {
@@ -107,8 +118,6 @@ class Game extends Component {
       })
     }
   }
-  // 1. Click on the square and makes up the current word
-
 
   render() {
     return (

@@ -6,7 +6,7 @@ const Board = (props) => {
 
   const {board, handleClick} = props;
   return (
-    <div className="blue-area">
+    <div className="orange-area">
       {
         board.map((row, index) => {
           return (
